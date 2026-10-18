@@ -15,21 +15,21 @@ ultraviolet desc
 Towering Blue Collection:
 returning_spiral desc
 above_the_falls desc
-above_the_falls1 
-mint_corner
+above_the_falls1 desc
+mint_corner desc
 
 cold liminal Collection:
-a_light_blizzard fix desc
-glaciar_roll fix desc
-snow_and_wind fix desc
-holiday_issue
-ridgway_passing
+a_light_blizzard desc
+glaciar_roll desc
+snow_and_wind desc
+holiday_issue desc
+ridgway_passing desc
 
 The Mill Collection:
-red_wire
-god_window
-frayed_belongings
-mill_barn1
+red_wire 
+god_window desc
+frayed_belongings desc
+mill_barn1 desc
 mill_barn2
 mill_barn3
 mill_left
@@ -38,11 +38,15 @@ mill_upward
 mill_face
 
 Passageways Collection:
-passage_way
+passage_way desc
 passage_way1
 passage_way2
 passage_way3
 
+ISSUES TO FIX:
+bad performance on computer browser
+overly grainy thumbnail photos on computer browser
+about section on mobile detaching from top of screen
 
 
 Multiverse by HTML5 UP
