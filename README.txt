@@ -6,7 +6,7 @@ strange_company X
 restricted_balcony X
 -
 
-purple Collection:
+contrast Collection:
 morning_break
 purple_line
 ultraviolet
@@ -16,7 +16,7 @@ Towering Blue Collection:
 returning_spiral
 above_the_falls
 
-soft teal Collection:
+cold liminal Collection:
 a_light_blizzard
 glaciar_roll
 snow_and_wind
