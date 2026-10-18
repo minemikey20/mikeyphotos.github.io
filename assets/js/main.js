@@ -271,14 +271,20 @@
 				windowMargin: 50
 			});
 
-			// Hack: Set margins to 0 when 'xsmall' activates.
-				breakpoints.on('<=xsmall', function() {
-					$rows.each(function() { this._poptrox.windowMargin = 0; });
-				});
+			// Full-bleed photos on phones: no margin around the full-size image on small screens,
+			// including phones turned sideways (short viewports).
+				var phoneQuery = window.matchMedia('(max-width: 736px), (max-height: 500px)');
 
-				breakpoints.on('>xsmall', function() {
-					$rows.each(function() { this._poptrox.windowMargin = 50; });
-				});
+				function setPopupMargin() {
+					$rows.each(function() { this._poptrox.windowMargin = phoneQuery.matches ? 0 : 50; });
+				}
+
+				setPopupMargin();
+
+				if (phoneQuery.addEventListener)
+					phoneQuery.addEventListener('change', setPopupMargin);
+				else
+					phoneQuery.addListener(setPopupMargin);
 
 			// Swipe left/right inside the full-size view to change photo.
 				var touchX = null, touchY = null;
