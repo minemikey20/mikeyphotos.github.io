@@ -7,9 +7,9 @@ restricted_balcony X
 -
 
 contrast Collection:
-morning_break
-purple_line
-ultraviolet
+morning_break desc
+purple_line desc
+ultraviolet desc
 -
 
 Towering Blue Collection:
@@ -17,9 +17,9 @@ returning_spiral
 above_the_falls
 
 cold liminal Collection:
-a_light_blizzard
-glaciar_roll
-snow_and_wind
+a_light_blizzard fix
+glaciar_roll fix
+snow_and_wind fix
 
 
 
