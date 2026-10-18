@@ -210,7 +210,7 @@
 		var $main = $('#main');
 
 		// Thumbs.
-			$main.children('.thumb').each(function() {
+			$main.find('.thumb').each(function() {
 
 				var	$this = $(this),
 					$image = $this.find('.image'), $image_img = $image.children('img'),
@@ -236,8 +236,10 @@
 
 			});
 
-		// Poptrox.
-			$main.poptrox({
+		// Poptrox (one lightbox per collection, so next/previous stays inside that collection).
+			var $rows = $main.find('.row');
+
+			$rows.poptrox({
 				baseZIndex: 20000,
 				caption: function($a) {
 
@@ -271,11 +273,128 @@
 
 			// Hack: Set margins to 0 when 'xsmall' activates.
 				breakpoints.on('<=xsmall', function() {
-					$main[0]._poptrox.windowMargin = 0;
+					$rows.each(function() { this._poptrox.windowMargin = 0; });
 				});
 
 				breakpoints.on('>xsmall', function() {
-					$main[0]._poptrox.windowMargin = 50;
+					$rows.each(function() { this._poptrox.windowMargin = 50; });
 				});
+
+			// Swipe left/right inside the full-size view to change photo.
+				var touchX = null, touchY = null;
+
+				$(document)
+					.on('touchstart', '.poptrox-popup', function(event) {
+						var t = event.originalEvent.touches[0];
+						touchX = t.clientX;
+						touchY = t.clientY;
+					})
+					.on('touchend', '.poptrox-popup', function(event) {
+
+						if (touchX === null)
+							return;
+
+						var t = event.originalEvent.changedTouches[0],
+							dx = t.clientX - touchX,
+							dy = t.clientY - touchY;
+
+						touchX = touchY = null;
+
+						if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5)
+							$(this).find(dx < 0 ? '.nav-next' : '.nav-previous').trigger('click');
+
+					});
+
+	// Collections.
+		var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+			$collections = $main.find('.collection'),
+			$dots = $('#collection-dots .dot');
+
+		// Rows: prev/next arrows + overflow detection.
+			$collections.each(function() {
+
+				var $wrap = $(this).find('.row-wrap'),
+					row = $wrap.find('.row')[0],
+					$prev = $wrap.find('.row-arrow.prev'),
+					$next = $wrap.find('.row-arrow.next'),
+					ticking = false;
+
+				function update() {
+					var max = row.scrollWidth - row.clientWidth;
+					$wrap.toggleClass('has-overflow', max > 4);
+					$prev.toggleClass('is-hidden', row.scrollLeft <= 4);
+					$next.toggleClass('is-hidden', row.scrollLeft >= max - 4);
+					ticking = false;
+				}
+
+				function scrollRow(dir) {
+					row.scrollBy({ left: dir * row.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+				}
+
+				$prev.on('click', function() { scrollRow(-1); });
+				$next.on('click', function() { scrollRow(1); });
+
+				$(row).on('scroll', function() {
+					if (!ticking) {
+						ticking = true;
+						window.requestAnimationFrame(update);
+					}
+				});
+
+				$window.on('load resize', update);
+				update();
+
+			});
+
+		// Dots: highlight the collection in view, jump on click.
+			function updateDots() {
+
+				var refY = window.innerHeight * 0.4,
+					atBottom = (window.innerHeight + window.pageYOffset) >= (document.documentElement.scrollHeight - 2),
+					current = 0;
+
+				$collections.each(function(i) {
+					if (this.getBoundingClientRect().top <= refY)
+						current = i;
+				});
+
+				if (atBottom)
+					current = $collections.length - 1;
+
+				$dots.each(function(i) {
+					$(this).toggleClass('is-active', i === current);
+				});
+
+			}
+
+			var dotsTicking = false;
+
+			$window.on('scroll resize load', function() {
+				if (!dotsTicking) {
+					dotsTicking = true;
+					window.requestAnimationFrame(function() {
+						updateDots();
+						dotsTicking = false;
+					});
+				}
+			});
+
+			$dots.on('click', function(event) {
+
+				var target = $($(this).attr('href'))[0];
+
+				event.preventDefault();
+				event.stopPropagation();
+
+				// Close the About panel first if it's open.
+					if ($body.hasClass('content-active'))
+						$panels.trigger('---hide');
+
+				if (target)
+					target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+
+			});
+
+			updateDots();
 
 })(jQuery);
