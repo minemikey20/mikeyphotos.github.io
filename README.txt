@@ -1,3 +1,31 @@
+Checklist for photos that have been done and not:
+
+warm liminal Collection:
+tile_building X
+strange_company X
+restricted_balcony X
+-
+
+purple Collection:
+morning_break
+purple_line
+ultraviolet
+-
+
+Towering Blue Collection:
+returning_spiral
+above_the_falls
+
+soft teal Collection:
+a_light_blizzard
+glaciar_roll
+snow_and_wind
+
+
+
+
+
+
 Multiverse by HTML5 UP
 html5up.net | @ajlkn
 Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
