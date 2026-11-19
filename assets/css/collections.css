@@ -105,33 +105,59 @@
 	}
 
 /* ---------- Prev / next arrows (mouse users; hidden on touch) ---------- */
+/* Uses images/arrow.svg (points right); "prev" is the same file flipped. */
 
 	#main .row-arrow {
 		background: rgba(31, 34, 36, 0.8) !important;
 		border-radius: 50%;
 		box-shadow: none !important;
-		color: #ffffff !important;
-		font-size: 1em;
+		color: transparent !important;   /* hides any text/glyph arrow */
 		height: 3em;
 		letter-spacing: 0;
 		line-height: 3em;
 		margin-top: -1.5em;
 		opacity: 0.75;
+		overflow: hidden;
 		padding: 0;
 		position: absolute;
+		text-indent: -9999px;            /* hides any leftover text */
 		top: 50%;
 		transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+		white-space: nowrap;
 		width: 3em;
 		z-index: 3;
+	}
+
+	/* Hide whatever the old arrow was made of */
+	#main .row-arrow:before,
+	#main .row-arrow > * {
+		display: none !important;
+	}
+
+	/* The arrow.svg, centered in the button */
+	#main .row-arrow:after {
+		background: url('images/arrow.svg') center / 3em 3em no-repeat; /* adjust size to taste */
+		content: '';
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
 	}
 
 	#main .row-arrow.prev { left: 0.9em; }
 	#main .row-arrow.next { right: 0.9em; }
 
+	/* Flip the right-pointing arrow so "prev" points left */
+	#main .row-arrow.prev:after {
+		transform: scaleX(-1);
+	}
+
 	#main .row-arrow:hover,
 	#main .row-arrow:focus-visible {
 		background: #34a58e !important;
-		color: #ffffff !important;
+		color: transparent !important;
 		opacity: 1;
 	}
 
@@ -149,6 +175,23 @@
 			display: none !important;
 		}
 	}
+
+	/*
+	OPTIONAL: match the lightbox arrows exactly (no circle, fades 50% -> 100%).
+	Uncomment this block to use it.
+
+	#main .row-arrow {
+		background: none !important;
+		border-radius: 0;
+		opacity: 0.5;
+	}
+
+	#main .row-arrow:hover,
+	#main .row-arrow:focus-visible {
+		background: none !important;
+		opacity: 1;
+	}
+	*/
 
 /* ---------- Dot selector ---------- */
 
